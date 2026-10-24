@@ -1,0 +1,119 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Business Sales Analytics</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<style>
+*{box-sizing:border-box}
+body{margin:0;background:#f4f7fb;color:#17243b;
+font-family:Arial,sans-serif}
+header{background:#142b4a;color:white;padding:28px 6%}
+header p{color:#cbd8e8}
+main{max-width:1200px;margin:28px auto;padding:0 18px}
+.kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.card{background:white;padding:22px;border-radius:14px;
+box-shadow:0 3px 14px #152b4910;margin-bottom:20px}
+.kpi{font-size:28px;font-weight:bold;margin-top:12px}
+.charts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.chart{height:300px;position:relative}
+h2{font-size:18px}
+.label{color:#65748b;font-size:13px}
+a{color:#1769aa}
+footer{text-align:center;padding:24px;color:#65748b}
+@media(max-width:700px){
+.charts,.kpis{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+<header>
+<h1>Business Sales Analytics</h1>
+<p>Sales performance, profitability and regional insights</p>
+</header>
+<main>
+<section class="kpis">
+<div class="card">
+<div class="label">TOTAL SALES</div>
+<div class="kpi">$2,297,200.86</div>
+</div>
+<div class="card">
+<div class="label">TOTAL PROFIT</div>
+<div class="kpi">$286,397.02</div>
+</div>
+</section>
+
+<section class="charts">
+<div class="card">
+<h2>Sales by Category</h2>
+<div class="chart"><canvas id="salesCategory"></canvas></div>
+</div>
+<div class="card">
+<h2>Profit by Category</h2>
+<div class="chart"><canvas id="profitCategory"></canvas></div>
+</div>
+<div class="card">
+<h2>Sales by Region</h2>
+<div class="chart"><canvas id="salesRegion"></canvas></div>
+</div>
+<div class="card">
+<h2>Profit by Region</h2>
+<div class="chart"><canvas id="profitRegion"></canvas></div>
+</div>
+<div class="card">
+<h2>Category Sales vs Profit</h2>
+<div class="chart"><canvas id="comparison"></canvas></div>
+</div>
+</section>
+
+<section class="card">
+<h2>Business Insights</h2>
+<ul>
+<li>Technology has the highest sales and profit among the three categories.</li>
+<li>The West region leads in both sales and profit.</li>
+<li>Furniture has relatively low profit compared with its sales.</li>
+<li>Review discounting and product costs to identify opportunities to improve profitability.</li>
+</ul>
+<p class="label">Explore the original Excel workbook in the project repository.</p>
+<a href="https://github.com/peddilaxmiprasanna/Business-sales-performance-analytics">
+View project and Excel workbook on GitHub
+</a>
+</section>
+</main>
+<footer>Business Sales Performance Analytics · Portfolio Project</footer>
+
+<script>
+const categories = ['Furniture','Office Supplies','Technology'];
+const catSales = [741999.80,719047.03,836154.03];
+const catProfit = [18451.27,122490.80,145454.95];
+const regions = ['Central','East','South','West'];
+const regSales = [501239.89,678781.24,391721.91,725457.82];
+const regProfit = [39706.36,91522.78,46749.43,108418.45];
+
+function makeChart(id,type,labels,datasets){
+ new Chart(document.getElementById(id),{
+  type:type,
+  data:{labels:labels,datasets:datasets},
+  options:{
+   responsive:true,maintainAspectRatio:false,
+   plugins:{legend:{position:'bottom'}},
+   scales:{y:{beginAtZero:true}}
+  }
+ });
+}
+const salesStyle={label:'Sales ($)',backgroundColor:'#3976c5'};
+const profitStyle={label:'Profit ($)',backgroundColor:'#25a18e'};
+
+makeChart('salesCategory','bar',categories,[{...salesStyle,data:catSales}]);
+makeChart('profitCategory','bar',categories,[{...profitStyle,data:catProfit}]);
+makeChart('salesRegion','bar',regions,[{...salesStyle,data:regSales}]);
+makeChart('profitRegion','bar',regions,[{...profitStyle,data:regProfit}]);
+makeChart('comparison','bar',categories,[
+ {...salesStyle,data:catSales},
+ {...profitStyle,data:catProfit}
+]);
+</script>
+</body>
+</html>
