@@ -4,116 +4,411 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Business Sales Analytics</title>
+<title>Excel Data Analytics | Task 1 & Task 2</title>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <style>
 *{box-sizing:border-box}
-body{margin:0;background:#f4f7fb;color:#17243b;
-font-family:Arial,sans-serif}
-header{background:#142b4a;color:white;padding:28px 6%}
-header p{color:#cbd8e8}
+html{scroll-behavior:smooth}
+body{
+  margin:0;background:#f4f7fb;color:#17243b;
+  font-family:Arial,sans-serif;line-height:1.6
+}
+header{
+  background:linear-gradient(135deg,#142b4a,#245b85);
+  color:white;padding:34px 6%
+}
+header p{color:#d3e2f1;margin-bottom:0}
+nav{
+  background:white;padding:14px 6%;display:flex;
+  gap:12px;flex-wrap:wrap;position:sticky;top:0;
+  z-index:10;box-shadow:0 2px 10px #152b4910
+}
+nav a{
+  text-decoration:none;color:#245b85;font-weight:bold;
+  padding:8px 14px;border-radius:8px
+}
+nav a:hover{background:#e9f2ff}
 main{max-width:1200px;margin:28px auto;padding:0 18px}
-.kpis{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
-.card{background:white;padding:22px;border-radius:14px;
-box-shadow:0 3px 14px #152b4910;margin-bottom:20px}
-.kpi{font-size:28px;font-weight:bold;margin-top:12px}
-.charts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.task{margin-bottom:50px;scroll-margin-top:85px}
+.task-heading{margin-bottom:20px}
+.task-heading p{color:#65748b}
+.kpis{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:18px;margin-bottom:20px
+}
+.card{
+  background:white;padding:22px;border-radius:14px;
+  box-shadow:0 3px 14px #152b4910;
+  margin-bottom:18px;min-width:0
+}
+.kpi{font-size:28px;font-weight:bold;margin-top:8px}
+.label{color:#65748b;font-size:13px;font-weight:bold;letter-spacing:.4px}
+.charts{
+  display:grid;grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:18px
+}
 .chart{height:300px;position:relative}
-h2{font-size:18px}
-.label{color:#65748b;font-size:13px}
-a{color:#1769aa}
-footer{text-align:center;padding:24px;color:#65748b}
+h1,h2,h3{line-height:1.3}
+h2{font-size:19px}
+.section-label{
+  color:#3976c5;font-size:12px;font-weight:bold;
+  letter-spacing:1.5px;text-transform:uppercase
+}
+.insights li{margin:9px 0}
+.note{font-size:13px;color:#65748b}
+a.button{
+  display:inline-block;background:#245b85;color:white;
+  text-decoration:none;padding:11px 16px;border-radius:8px;
+  font-weight:bold
+}
+a.button:hover{background:#142b4a}
+footer{text-align:center;padding:26px;color:#65748b}
+@media(min-width:800px){
+  .kpis{grid-template-columns:repeat(4,minmax(0,1fr))}
+}
 @media(max-width:700px){
-.charts,.kpis{grid-template-columns:1fr}
+  .charts,.kpis{grid-template-columns:1fr}
+  header{padding:26px 5%}
 }
 </style>
 </head>
+
 <body>
+
 <header>
-<h1>Business Sales Analytics</h1>
-<p>Sales performance, profitability and regional insights</p>
+  <h1>Data Analytics Dashboard</h1>
+  <p>Sales Performance, Profitability & Customer Churn Analysis</p>
 </header>
+
+<nav>
+  <a href="#task1">Task 1: Sales Analytics</a>
+  <a href="#task2">Task 2: Customer Churn</a>
+</nav>
+
 <main>
-<section class="kpis">
-<div class="card">
-<div class="label">TOTAL SALES</div>
-<div class="kpi">$2,297,200.86</div>
-</div>
-<div class="card">
-<div class="label">TOTAL PROFIT</div>
-<div class="kpi">$286,397.02</div>
-</div>
+
+<!-- ================= TASK 1 ================= -->
+
+<section class="task" id="task1">
+
+  <div class="task-heading">
+    <div class="section-label">Task 1</div>
+    <h1>Business Sales Performance Analytics</h1>
+    <p>Analyze sales, profitability, category performance and regional trends.</p>
+  </div>
+
+  <section class="kpis">
+    <div class="card">
+      <div class="label">TOTAL SALES</div>
+      <div class="kpi">$2,297,200.86</div>
+    </div>
+    <div class="card">
+      <div class="label">TOTAL PROFIT</div>
+      <div class="kpi">$286,397.02</div>
+    </div>
+    <div class="card">
+      <div class="label">TOP SALES CATEGORY</div>
+      <div class="kpi">Technology</div>
+    </div>
+    <div class="card">
+      <div class="label">TOP SALES REGION</div>
+      <div class="kpi">West</div>
+    </div>
+  </section>
+
+  <section class="charts">
+    <div class="card">
+      <h2>Sales by Category</h2>
+      <div class="chart"><canvas id="salesCategory"></canvas></div>
+    </div>
+
+    <div class="card">
+      <h2>Profit by Category</h2>
+      <div class="chart"><canvas id="profitCategory"></canvas></div>
+    </div>
+
+    <div class="card">
+      <h2>Sales by Region</h2>
+      <div class="chart"><canvas id="salesRegion"></canvas></div>
+    </div>
+
+    <div class="card">
+      <h2>Profit by Region</h2>
+      <div class="chart"><canvas id="profitRegion"></canvas></div>
+    </div>
+
+    <div class="card">
+      <h2>Category Sales vs Profit</h2>
+      <div class="chart"><canvas id="comparison"></canvas></div>
+    </div>
+  </section>
+
+  <section class="card insights">
+    <h2>Business Insights</h2>
+    <ul>
+      <li>Technology has the highest sales and profit among the three categories.</li>
+      <li>The West region leads in both sales and profit.</li>
+      <li>Furniture generates relatively low profit compared with its sales.</li>
+      <li>Review discounting and product costs to identify opportunities to improve profitability.</li>
+    </ul>
+
+    <a class="button"
+       href="https://github.com/peddilaxmiprasanna/Business-sales-performance-analytics"
+       target="_blank" rel="noopener noreferrer">
+       View Task 1 on GitHub
+    </a>
+  </section>
+
 </section>
 
-<section class="charts">
-<div class="card">
-<h2>Sales by Category</h2>
-<div class="chart"><canvas id="salesCategory"></canvas></div>
-</div>
-<div class="card">
-<h2>Profit by Category</h2>
-<div class="chart"><canvas id="profitCategory"></canvas></div>
-</div>
-<div class="card">
-<h2>Sales by Region</h2>
-<div class="chart"><canvas id="salesRegion"></canvas></div>
-</div>
-<div class="card">
-<h2>Profit by Region</h2>
-<div class="chart"><canvas id="profitRegion"></canvas></div>
-</div>
-<div class="card">
-<h2>Category Sales vs Profit</h2>
-<div class="chart"><canvas id="comparison"></canvas></div>
-</div>
+<!-- ================= TASK 2 ================= -->
+
+<section class="task" id="task2">
+
+  <div class="task-heading">
+    <div class="section-label">Task 2</div>
+    <h1>Customer Churn Analysis</h1>
+    <p>Understand customer churn patterns and explore opportunities to improve retention.</p>
+  </div>
+
+  <section class="kpis">
+    <div class="card">
+      <div class="label">TOTAL CUSTOMERS</div>
+      <div class="kpi">7,043</div>
+    </div>
+
+    <div class="card">
+      <div class="label">CHURN RATE</div>
+      <div class="kpi" style="color:#c03948">26.54%</div>
+    </div>
+
+    <div class="card">
+      <div class="label">CHURNED CUSTOMERS</div>
+      <div class="kpi">1,869</div>
+    </div>
+
+    <div class="card">
+      <div class="label">RETAINED CUSTOMERS</div>
+      <div class="kpi" style="color:#16805d">5,174</div>
+    </div>
+  </section>
+
+  <section class="charts">
+
+    <div class="card">
+      <h2>Customer Churn Rate by Internet Service</h2>
+      <div class="chart"><canvas id="churnInternet"></canvas></div>
+    </div>
+
+    <div class="card">
+      <h2>Customer Churn by Payment Method</h2>
+      <div class="chart"><canvas id="churnPayment"></canvas></div>
+    </div>
+
+    <div class="card">
+      <h2>Customer Churn by Contract Type</h2>
+      <div class="chart"><canvas id="churnContract"></canvas></div>
+    </div>
+
+    <div class="card">
+      <h2>Customer Churn by Tenure</h2>
+      <div class="chart"><canvas id="churnTenure"></canvas></div>
+    </div>
+
+  </section>
+
+  <section class="card">
+    <h2>About This Task</h2>
+    <p>
+      This task uses customer data to analyze churn, summarize key performance
+      indicators and visualize customer patterns across internet service,
+      payment method, contract type and tenure.
+    </p>
+    <p class="note">
+      The churn KPI values are included. Chart data must be entered from your
+      actual Excel PivotTables before those charts can display results.
+    </p>
+  </section>
+
 </section>
 
-<section class="card">
-<h2>Business Insights</h2>
-<ul>
-<li>Technology has the highest sales and profit among the three categories.</li>
-<li>The West region leads in both sales and profit.</li>
-<li>Furniture has relatively low profit compared with its sales.</li>
-<li>Review discounting and product costs to identify opportunities to improve profitability.</li>
-</ul>
-<p class="label">Explore the original Excel workbook in the project repository.</p>
-<a href="https://github.com/peddilaxmiprasanna/Business-sales-performance-analytics">
-View project and Excel workbook on GitHub
-</a>
-</section>
 </main>
-<footer>Business Sales Performance Analytics · Portfolio Project</footer>
+
+<footer>
+  Excel Data Analytics | Task 1: Business Sales Performance |
+  Task 2: Customer Churn Analysis
+</footer>
 
 <script>
 const categories = ['Furniture','Office Supplies','Technology'];
 const catSales = [741999.80,719047.03,836154.03];
 const catProfit = [18451.27,122490.80,145454.95];
+
 const regions = ['Central','East','South','West'];
 const regSales = [501239.89,678781.24,391721.91,725457.82];
 const regProfit = [39706.36,91522.78,46749.43,108418.45];
 
-function makeChart(id,type,labels,datasets){
- new Chart(document.getElementById(id),{
-  type:type,
-  data:{labels:labels,datasets:datasets},
-  options:{
-   responsive:true,maintainAspectRatio:false,
-   plugins:{legend:{position:'bottom'}},
-   scales:{y:{beginAtZero:true}}
-  }
- });
-}
-const salesStyle={label:'Sales ($)',backgroundColor:'#3976c5'};
-const profitStyle={label:'Profit ($)',backgroundColor:'#25a18e'};
+const salesStyle = {
+  label:'Sales ($)',
+  backgroundColor:'#3976c5',
+  borderRadius:5
+};
 
-makeChart('salesCategory','bar',categories,[{...salesStyle,data:catSales}]);
-makeChart('profitCategory','bar',categories,[{...profitStyle,data:catProfit}]);
-makeChart('salesRegion','bar',regions,[{...salesStyle,data:regSales}]);
-makeChart('profitRegion','bar',regions,[{...profitStyle,data:regProfit}]);
-makeChart('comparison','bar',categories,[
- {...salesStyle,data:catSales},
- {...profitStyle,data:catProfit}
+const profitStyle = {
+  label:'Profit ($)',
+  backgroundColor:'#25a18e',
+  borderRadius:5
+};
+
+function makeChart(id,type,labels,datasets,extraOptions={}) {
+  return new Chart(document.getElementById(id),{
+    type,
+    data:{labels,datasets},
+    options:{
+      responsive:true,
+      maintainAspectRatio:false,
+      plugins:{
+        legend:{position:'bottom'}
+      },
+      scales:{
+        y:{
+          beginAtZero:true,
+          ticks:{
+            callback:value =>
+              '$'+Number(value).toLocaleString('en-US')
+          }
+        }
+      },
+      ...extraOptions
+    }
+  });
+}
+
+makeChart('salesCategory','bar',categories,[
+  {...salesStyle,data:catSales}
 ]);
+
+makeChart('profitCategory','bar',categories,[
+  {...profitStyle,data:catProfit}
+]);
+
+makeChart('salesRegion','bar',regions,[
+  {...salesStyle,data:regSales}
+]);
+
+makeChart('profitRegion','bar',regions,[
+  {...profitStyle,data:regProfit}
+]);
+
+// Separate axes make sales and profit easier to compare.
+new Chart(document.getElementById('comparison'),{
+  type:'bar',
+  data:{
+    labels:categories,
+    datasets:[
+      {
+        ...salesStyle,
+        data:catSales,
+        yAxisID:'y'
+      },
+      {
+        ...profitStyle,
+        data:catProfit,
+        yAxisID:'y1'
+      }
+    ]
+  },
+  options:{
+    responsive:true,
+    maintainAspectRatio:false,
+    interaction:{mode:'index',intersect:false},
+    plugins:{legend:{position:'bottom'}},
+    scales:{
+      y:{
+        type:'linear',
+        position:'left',
+        beginAtZero:true,
+        title:{display:true,text:'Sales ($)'},
+        ticks:{
+          callback:value =>
+            '$'+Number(value).toLocaleString('en-US')
+        }
+      },
+      y1:{
+        type:'linear',
+        position:'right',
+        beginAtZero:true,
+        grid:{drawOnChartArea:false},
+        title:{display:true,text:'Profit ($)'},
+        ticks:{
+          callback:value =>
+            '$'+Number(value).toLocaleString('en-US')
+        }
+      }
+    }
+  }
+});
+
+// TASK 2 CHART DATA
+// Replace null with your actual values from Excel.
+// These charts will display once actual numeric data is supplied.
+
+const churnCharts = [
+  {
+    id:'churnInternet',
+    labels:['DSL','Fiber optic','No internet service'],
+    values:[null,null,null]
+  },
+  {
+    id:'churnPayment',
+    labels:[
+      'Electronic check',
+      'Mailed check',
+      'Bank transfer (automatic)',
+      'Credit card (automatic)'
+    ],
+    values:[null,null,null,null]
+  },
+  {
+    id:'churnContract',
+    labels:['Month-to-month','One year','Two year'],
+    values:[null,null,null]
+  },
+  {
+    id:'churnTenure',
+    // Replace these example labels with your actual Excel groups.
+    labels:['Group 1','Group 2','Group 3','Group 4'],
+    values:[null,null,null,null]
+  }
+];
+
+churnCharts.forEach(item => {
+  const canvas = document.getElementById(item.id);
+  const wrapper = canvas.parentElement;
+
+  if (!item.values.some(value => typeof value === 'number')) {
+    canvas.style.display = 'none';
+
+    const message = document.createElement('p');
+    message.className = 'note';
+    message.textContent =
+      'Add your actual Excel chart values in the code to display this chart.';
+    wrapper.appendChild(message);
+    return;
+  }
+
+  makeChart(item.id,'bar',item.labels,[
+    {
+      label:'Churned customers',
+      data:item.values,
+      backgroundColor:'#d9535d',
+      borderRadius:5
+    }
+  ]);
+});
 </script>
+
 </body>
 </html>
+
